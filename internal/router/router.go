@@ -179,6 +179,11 @@ func New(ctx context.Context, db db.DB) (Router, error) {
 		return nil, err
 	}
 
+	engine.Use(func(ctx *gin.Context) {
+		// reload templates on every route
+		loadTemplates(engine)
+	})
+
 	// create the http server here, passing the gin engine as handler
 	bindAddress := config.GetBindAddress()
 	port := config.GetPort()
