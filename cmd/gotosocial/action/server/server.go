@@ -41,6 +41,7 @@ import (
 	"github.com/superseriousbusiness/gotosocial/internal/api/client/list"
 	mediaModule "github.com/superseriousbusiness/gotosocial/internal/api/client/media"
 	"github.com/superseriousbusiness/gotosocial/internal/api/client/notification"
+	"github.com/superseriousbusiness/gotosocial/internal/api/client/ostatus"
 	"github.com/superseriousbusiness/gotosocial/internal/api/client/search"
 	"github.com/superseriousbusiness/gotosocial/internal/api/client/status"
 	"github.com/superseriousbusiness/gotosocial/internal/api/client/streaming"
@@ -175,6 +176,7 @@ var Start action.GTSAction = func(ctx context.Context) error {
 	favouritesModule := favourites.New(processor)
 	blocksModule := blocks.New(processor)
 	userClientModule := userClient.New(processor)
+	ostatusModule := ostatus.New(processor)
 
 	apis := []api.ClientModule{
 		// modules with middleware go first
@@ -206,6 +208,7 @@ var Start action.GTSAction = func(ctx context.Context) error {
 		favouritesModule,
 		blocksModule,
 		userClientModule,
+		ostatusModule,
 	}
 
 	for _, m := range apis {

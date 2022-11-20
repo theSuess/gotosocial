@@ -33,6 +33,8 @@ const (
 	webfingerSelf                   = "self"
 	webFingerSelfContentType        = "application/activity+json"
 	webfingerAccount                = "acct"
+	ostatusSubscribe                = "http://ostatus.org/schema/1.0/subscribe"
+	ostatusSubscribeTemplate        = "%s://%s/authorize_interaction?uri={ uri }"
 )
 
 func (p *processor) GetWebfingerAccount(ctx context.Context, requestedUsername string) (*apimodel.WellKnownResponse, gtserror.WithCode) {
@@ -64,6 +66,10 @@ func (p *processor) GetWebfingerAccount(ctx context.Context, requestedUsername s
 				Rel:  webfingerSelf,
 				Type: webFingerSelfContentType,
 				Href: requestedAccount.URI,
+			},
+			{
+				Rel:      ostatusSubscribe,
+				Template: fmt.Sprintf(ostatusSubscribeTemplate, config.GetProtocol(), config.GetHost()),
 			},
 		},
 	}, nil
